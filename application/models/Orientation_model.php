@@ -35,14 +35,19 @@ class Orientation_model extends CI_model
 			->result_object();
 	}
 
-	public function GetSectionEns($idEns, $idOption, $idEntrant){
-		return $this->db->select('s.libelle, s.url, s.bgcolor, s.id sectionId, o.id optionId, te.id ensId')
-			->from('sections s')
-			-> join('diplome_entrant_section de', 'de.section = s.id')
-			->join('options o', 'o.id = s.options')
-			->join('type_enseignements te', 'te.id = o.type_enseignement')
-			->where('de.diplome_entrant', $idEntrant)
-			->where('o.id', $idOption)
+	public function GetSectionEns($idEns, $idOption, $idEntrant=NULL){
+		$req = $this->db->select('s.libelle, s.url, s.bgcolor, s.id sectionId, o.id optionId, te.id ensId')
+			->from('sections s');
+			if(!empty($idEntrant)){
+				$req-> join('diplome_entrant_section de', 'de.section = s.id');
+			}
+
+		$req->join('options o', 'o.id = s.options')
+			->join('type_enseignements te', 'te.id = o.type_enseignement');
+		if(!empty($idEntrant)){
+			$req->where('de.diplome_entrant', $idEntrant);
+		}
+		return $req->where('o.id', $idOption)
 			->where('te.id', $idEns)
 			->get()
 			->result();
@@ -65,16 +70,34 @@ class Orientation_model extends CI_model
 	}
 
 	public function GetFacultySection($idEns, $idOption, $identrant, $idSection){
-		return $this->db->select('f.libelle, f.id filiereId, f.abbreviation fAbbr')
+		$req = $this->db->select('f.libelle, f.id filiereId, f.abbreviation fAbbr')
 			->from('filieres f')
-			-> join('sections s', 's.id = f.section')
-			-> join('diplome_entrant_section de', 'de.id = f.diplome_entrant_section')
-			->join('options o', 'o.id = s.options')
-			->join('type_enseignements te', 'te.id = o.type_enseignement')
-			->where('f.section', $idSection)
-			->where('de.diplome_entrant', $identrant)
-			->where('o.id', $idOption)
+			-> join('sections s', 's.id = f.section');
+		if($identrant != 0){
+			$req-> join('diplome_entrant_section de', 'de.id = f.diplome_entrant_section');
+		}
+
+		$req->join('options o', 'o.id = s.options')
+		->join('type_enseignements te', 'te.id = o.type_enseignement')
+		->where('f.section', $idSection);
+		if($identrant != 0){
+			$req->where('de.diplome_entrant', $identrant);
+		}
+
+		return $req->where('o.id', $idOption)
 			->where('te.id', $idEns)
+			->get()
+			->result();
+	}
+
+	public function getSchool(){
+		return $this->db->select('e.*, l.name localite, a.name arron, d.name dept, r.name reg ')
+			->from('ecole as e')
+			->join('localites as l', 'e.localite = l.id')
+			->join('arrondissements as a', 'l.arrondissement = a.id')
+			->join('departements as d', 'a.departement = d.id')
+			->join('regions as r', 'd.region = r.id')
+			->order_by('r.name', 'asc')
 			->get()
 			->result();
 	}

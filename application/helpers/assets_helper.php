@@ -43,4 +43,28 @@ if ( ! function_exists('theme_css')) {
 	}
 }
 
+if ( ! function_exists('breadcrumb')) {
+	function breadcrumb($data)
+	{
+		?>
+		<ol class="breadcrumb">
+			<?php
 
+			$i = 0;
+			foreach ($data as $label => $url) {
+				if ($i < count($data) - 1) {
+					?>
+					<li class="breadcrumb-item"><?php echo $label ?></li>
+					<?php
+				} else {
+					?>
+					<li class="breadcrumb-item active"><?php echo $label ?></li>
+					<?php
+				}
+				$i++;
+			}
+			?>
+		</ol>
+		<?php
+	}
+}

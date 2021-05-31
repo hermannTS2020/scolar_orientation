@@ -113,6 +113,34 @@
 		</div>
 
 	</div>
+	<br><br>
+	<div class="row">
+		<div class="col-md-12 ">
+			<div class="card">
+				<div class="card-header" style="background: linear-gradient(to left, #b51b67, #652387); ">
+					<h3 class="text-white">Correspondances entre les spécialitésdu 1er et 2nd cycle des  <strong class="bold text-capitalize"><?= $libelleOpt?></strong>  de <strong class="text-capitalize bold"><?= $libelleEns?></strong>  </h3>
+				</div>
+				<div class="card-body">
+					<div class="table-responsive">
+						<table id="datatable" class="table small table-hover table-sm table-bordered w-100">
+							<thead>
+							<tr>
+								<th>Sections </th>
+								<th>premier cycle</th>
+								<th>second cycle</th>
+							</tr>
+							</thead>
+							<tbody>
+
+							</tbody>
+
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+	</div>
 	<!--	<div class="row justify-content-around custom-line">-->
 	<!--		<div class="col-md-4 ">-->
 	<!--			<div class="card bg-warning enseignement">-->

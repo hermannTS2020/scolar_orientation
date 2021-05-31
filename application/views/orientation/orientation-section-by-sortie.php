@@ -56,12 +56,12 @@
 <div class="container">
 	<div class="row justify-content-around">
 		<div class="col-md-4">
-			<div class="card option <?= $diplomeBgcolor ?>">
+			<div class="card option <?= (!empty($diplomeBgcolor))?$diplomeBgcolor:'bg-primary' ?>">
 				<div class="card-body text-lg-center">
 					<!--									<img src="--><?//= img('images/estp.jpg')?><!--" class="card-img-absolute rounded" alt="circle-image" height="80%" width="80%"><br><br>-->
 					<div class="card-text">
-						<h2 class="text-capitalize"><?= $diplomeNom?> </h2>
-						<p class="text-uppercase "><strong class=""><?= $diplomeCode?> </strong></p>
+						<h2 class="text-capitalize"><?= (!empty($diplomeNom))?$diplomeNom:$libelleOpt?> </h2>
+						<p class="text-uppercase "><strong class=""><?= (!empty($diplomeCode))?$diplomeCode:''?> </strong></p>
 					</div>
 
 				</div>
@@ -73,11 +73,12 @@
 		<div class="col-md-12 ">
 			<div class="card">
 				<div class="card-header" style="background:  linear-gradient(to left, #b51b67, #652387)">
-					<h2 class="text-white">Les différentes sections <?= $diplomeNom?> </h2>
+					<h2 class="text-white">Les différentes sections <?= (!empty($diplomeNom))?$diplomeNom:$libelleOpt?> </h2>
 				</div>
 				<div class="card-body">
 					<div class="row">
 						<?php
+						$diplomeId = (!empty($diplomeId))?$diplomeId:'0';
 						foreach ($sections as $s){?>
 							<div class="col-md-4 ">
 								<a href="<?=base_url( $s->url.'/'.$s->ensId.'/'.$s->optionId.'/'.$diplomeId.'/'.$s->sectionId) ?>">

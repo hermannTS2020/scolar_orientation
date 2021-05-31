@@ -87,7 +87,7 @@
 		<div class="col-md-12 ">
 			<div class="card">
 				<div class="card-header" style="background:  linear-gradient(to left, #b51b67, #652387)">
-					<h3 class="text-white">Les différentes filières du <strong class="bold">génie électrique</strong> après l'école primaire</h3>
+					<h3 class="text-white">Les différentes filières de la section <strong class="bold"><?= $sectionLibelle?> </strong></h3>
 				</div>
 				<div class="card-body">
 					<div class="table-responsive">

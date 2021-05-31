@@ -56,7 +56,13 @@ class Orientation extends MY_Controller {
 
 		$this->data['active'] = 'orientation';
 //		$this->load->view('welcome_message');
-		$this->render('Orientation', 'orientation-section');
+		if($idEns == 1){
+			$this->render('Orientation', 'orientation-section');
+		}else{
+			$this->data['sections'] = $r = $this->om->GetSectionEns($idEns, $idOption);
+			$this->render('Orientation', 'orientation-section-by-sortie');
+		}
+
 	}
 
 	public function GetSectionBySortie($idEns, $idOption, $identrant){
@@ -81,7 +87,6 @@ class Orientation extends MY_Controller {
 //		var_dump($sectionItem);die;
 
 		$this->data['faculty'] = $f = $this->om->GetFacultySection($idEns, $idOption, $identrant, $idSection);
-		var_dump($f);die;
 
 		$this->data['active'] = 'orientation';
 //		$this->load->view('welcome_message');

@@ -47,7 +47,7 @@ if ( ! function_exists('breadcrumb')) {
 	function breadcrumb($data)
 	{
 		?>
-		<ol class="breadcrumb">
+		<ul class="breadcrumb">
 			<?php
 
 			$i = 0;
@@ -64,7 +64,7 @@ if ( ! function_exists('breadcrumb')) {
 				$i++;
 			}
 			?>
-		</ol>
+		</ul>
 		<?php
 	}
 }

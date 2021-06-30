@@ -69,8 +69,13 @@
 <!--			</div>-->
 		</div>
 	</div>
-	<br><br><br>
+	<br><br>
 	<div class="row">
+		<div class="col-sm-12  align-self-center">
+			<?php
+			breadcrumb($breadcrumb);
+			?>
+		</div>
 		<div class="col-md-12 ">
 			<div class="card">
 				<div class="card-header" style="background: linear-gradient(to left, #b51b67, #652387); ">

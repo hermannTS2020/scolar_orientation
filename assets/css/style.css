@@ -3489,6 +3489,9 @@ span.m_1 {
 	color: #fff;
 	background-color: deeppink;
 }
+a:hover{
+	color: white !important;
+}
 .etab-button a:hover{
 	background: linear-gradient(to left, #b51b67, #652387);
 	/*background: purple !important;*/
@@ -3987,9 +3990,15 @@ a.link-style3 {
 	margin-bottom: 25px !important;
 }
 .option-item{
+	height: 190px;
+	text-align: center;
+	vertical-align: middle;
+	line-height: 30px !important;
 	margin-bottom: 25px !important;
 }
-
+.description{
+	text-align: justify !important;
+}
 .btn-secondary {
 	color: #292b2c;
 	background-color: #fff;

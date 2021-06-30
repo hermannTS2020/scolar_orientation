@@ -209,7 +209,7 @@
 			jQuery(document).ready(function($){
 
 				if (initdTable === false)
-					initDataTable($('#datatable'), 25, ['pdf', 'excel']);
+					initDataTable($('#datatable'), 10, ['pdf', 'excel']);
 			});
 		</script>
 	</body>

@@ -54,6 +54,13 @@
 </div>
 <br><br><br><br>
 <div class="container">
+	<div class="row">
+		<div class="col-sm-12  align-self-center">
+			<?php
+			breadcrumb($breadcrumb);
+			?>
+		</div>
+	</div>
 	<div class="row justify-content-around">
 		<div class="col-md-4">
 			<div class="card option <?= (!empty($diplomeBgcolor))?$diplomeBgcolor:'bg-primary' ?>">

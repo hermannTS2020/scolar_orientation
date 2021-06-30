@@ -43,9 +43,10 @@
 <!--							</div>-->
 <!--						</li>-->
 						<li class="nav-item <?= ($active === 'offre_formation')?'active':'' ?>"><a class="nav-link" href="<?= base_url()?>">OFFRE DE FORMATION</a></li>
-						<li class="nav-item <?= ($active === 'metiers')?'active':'' ?>"><a class="nav-link text-uppercase" href="<?= base_url()?>">structure d'aide</a></li>
+						<li class="nav-item <?= ($active === 'metiers')?'active':'' ?>"><a class="nav-link text-uppercase" href="<?= base_url('Structure')?>">structure d'aide</a></li>
 						<li class="nav-item <?= ($active === 'etablissements')?'active':'' ?>"><a class="nav-link" href="<?= base_url('School')?>">ETABLISSEMENTS</a></li>
 						<li class="nav-item <?= ($active === 'contact')?'active':'' ?>"><a class="nav-link" href="<?= base_url()?>">Contact</a></li>
+						<li class="nav-item <?= ($active === 'connexion')?'active':'' ?>"><a class="nav-link" href="<?= base_url('Connexion')?>">Connexion</a></li>
 					</ul>
 
 				</div>

@@ -54,6 +54,13 @@
 </div>
 <br><br><br><br>
 <div class="container">
+	<div class="row">
+		<div class="col-sm-12  align-self-center">
+			<?php
+			breadcrumb($breadcrumb);
+			?>
+		</div>
+	</div>
 	<div class="row justify-content-around">
 		<div class="col-md-4">
 			<div class="card option <?= $sectionBgcolor ?>">
@@ -97,26 +104,45 @@
 									<th>Nom</th>
 									<th>Condition d'accès</th>
 									<th>Diplôme de sortie</th>
-									<th>Enseignement professionnel</th>
-									<th>Job description</th>
 									<th>Débouchés et metiers</th>
+									<th>Job description</th>
+									<th>Enseignement professionnel</th>
 									<th>Etablissements</th>
 								</tr>
 							</thead>
 							<tbody>
 								<?php
-									foreach ($faculty as $f ){?>
+									foreach ($faculty as  $index => $f ){?>
 										<tr>
-											<td><strong><?= $f->libelle ?></strong></td>
-											<td></td>
-											<td></td>
-											<td></td>
-											<td></td>
+											<td class="align-middle"><strong><?= $f->libelle ?></strong> <br> <label>Spécialité du <strong><?= $f->cycle ?></strong></label></td>
+											<td class="align-middle"></td>
+											<td class="align-middle"><strong><?= $f->diplome ?></strong></td>
 											<td>
-												<a class="btn btn-sm small bg-gradient-warning" href="<?php echo base_url('Orientation/GetSchoolByFaculty'.'/'.$f->filiereId) ?>" title="details"> <i class="fa fa-eye"> Details</i> </a>
+												<strong>Débouchés: &nbsp;&nbsp;</strong>
+												<?php
+												if(isset($f->debouches)){
+													foreach ($f->debouches as $d){
+														echo $d->libelle.' ; ';
+													}
+												}
+												?>
+												<br><br>
+												<strong>Métiers:  &nbsp;&nbsp;</strong>
+												<?php
+												if(isset($f->metiers)){
+													foreach ($f->metiers as $m){
+														echo $m->intitule.' ; ';
+													}
+												}
+												?>
 											</td>
 											<td>
-												<a class="btn btn-sm small btn-green" href="<?php echo base_url('Orientation/GetSchoolByFaculty'.'/'.$f->filiereId) ?>" title="consulter"> <i class="fa fa-eye"> Consulter</i> </a>
+												<a href="#" class="btn btn-sm btn-pink detail-job" data-index="<?= $index ?>" data-toggle="modal" data-target="#job-details">Afficher</a>
+											<td>
+												<a href="#" class="btn btn-sm btn-primary detail-cours" data-index="<?= $index ?>" data-toggle="modal" data-target="#cours-details">Détails</a>
+											</td>
+											<td>
+												<a class="btn btn-sm small btn-green text-white" href="<?php echo base_url('Orientation/GetSchoolByFaculty'.'/'.$f->filiereId) ?>" title="consulter">Consulter </a>
 											</td>
 										</tr>
 								<?php
@@ -133,7 +159,82 @@
 	</div>
 
 </div>
+<!-- Modal cours-->
+<div class="modal fade" id="cours-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="detail-title"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="details-body">
+				<div class="table-responsive">
+					<table id="detailsTable" class="table table-hover small table-sm table-bordered w-100">
+						<thead>
+						<tr>
+							<td>Numéro</td>
+							<td>Cours</td>
+						</tr>
+						</thead>
+						<tbody id="details-tbody">
 
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+<table class="d-none">
+	<tr class="property-row property-template">
+		<td class="property-name"></td>
+		<td class="property-value"></td>
+	</tr>
+</table>
+
+
+<!--Modal job-->
+<div class="modal fade" id="job-details" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog modal-lg" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="detailJob-title"></h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body" id="details-body">
+				<div class="table-responsive">
+					<table id="detailsJobTable" class="table table-hover small table-sm table-bordered w-100">
+						<thead>
+						<tr>
+							<td>Numéro</td>
+							<td>Intitule</td>
+						</tr>
+						</thead>
+						<tbody id="detailsJob-tbody">
+
+						</tbody>
+					</table>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+			</div>
+		</div>
+	</div>
+</div>
+<table class="d-none">
+	<tr class="property-row property-template2">
+		<td class="property-name"></td>
+		<td class="property-value"></td>
+	</tr>
+</table>
 <!--</div>-->
 <!---->
 <!--<div>-->
@@ -155,36 +256,68 @@
 <br>
 
 <script>
+	const faculty=<?= json_encode($faculty) ?>
 
-	// $(document).ready(function(){
-	// 	$("#region, #Arrondissement, #departement").select2({
-	// 		// placeholder: "Selectionner le(s) rôle(s)",
-	// 		// allowClear: true,
-	// 		width: '100%',
-	// 		theme: 'bootstrap4'
-	// 	});
-	// });
-	// originalOnload = window.onload;
-	// window.onload = function() {
-	// 	if (originalOnload) {
-	// 		originalOnload();
-	// 	}
-	// 	$("#region, #arrondissement, #departement, #formation").select2({
-	// 		// placeholder: "Selectionner le(s) rôle(s)",
-	// 		// allowClear: true,
-	// 		width: '100%',
-	// 		theme: 'bootstrap4'
-	// 	});
-	//
-	//
-	// };
-	// const searchButton = document.getElementById('search-button');
-	// const searchInput = document.getElementById('search-input');
-	// searchButton.addEventListener('click', () => {
-	// 	const inputValue = searchInput.value;
-	// 	alert(inputValue);
-	// });
+	originalOnload = window.onload;
+	window.onload = function() {
+		if (originalOnload) {
+			originalOnload();
+		}
+		console.log(faculty);
+		$(document).on('click', '.detail-cours', function (e){
+			e.preventDefault();
+			const $detailButton = $(this);
+			const $index = $detailButton.data('index');
 
+			const $CoursFaculty = faculty[Number.parseInt($index)]['cours'];
+			const $filiere = faculty[Number.parseInt($index)];
+			console.log($CoursFaculty);
+			const $detailsBody = $('#details-tbody');
+			$('#detailsTable').DataTable().clear().destroy();
+			$detailsBody.empty();
+			$('#detail-title').text(`Détails sur les cours de la filière  ${$filiere.libelle}`);
+			for (let $key in $CoursFaculty){
+				if ($CoursFaculty.hasOwnProperty($key)){
+					const $row = $('.property-template')
+							.clone()
+							.removeClass('property-template');
+					$row.find('.property-name').first().text(parseInt($key)+1);
+					$row.find('.property-value').first().text($CoursFaculty[$key].intitule);
+					$detailsBody.append($row);
+				}
+			}
+			initDataTable('#detailsTable', 10, ['pdf', 'excel']);
+		});
+		$(document).on('click', '.detail-job', function (e){
+			e.preventDefault();
+			const $detailButton = $(this);
+			const $index = $detailButton.data('index');
 
+			const $JobFaculty = faculty[Number.parseInt($index)]['job'];
+			const $filiere = faculty[Number.parseInt($index)]; //pour avoir les infos sur la filiere
+			console.log($JobFaculty);
+			const $detailsBody = $('#detailsJob-tbody');
+			$('#detailsJobTable').DataTable().clear().destroy();
+			$detailsBody.empty();
+			$('#detailJob-title').text(`Détails sur les job de la filière  ${$filiere.libelle}`);
+			for (let $key in $JobFaculty){
+				if ($JobFaculty.hasOwnProperty($key)){
+					const $row = $('.property-template')
+							.clone()
+							.removeClass('property-template');
+					$row.find('.property-name').first().text(parseInt($key)+1);
+					$row.find('.property-value').first().text($JobFaculty[$key].libelle);
+					$detailsBody.append($row);
+				}
+			}
+			initDataTable('#detailsJobTable', 10, ['pdf', 'excel']);
+		});
 
+	};
+	const searchButton = document.getElementById('search-button');
+	const searchInput = document.getElementById('search-input');
+	searchButton.addEventListener('click', () => {
+		const inputValue = searchInput.value;
+		alert(inputValue);
+	});
 </script>

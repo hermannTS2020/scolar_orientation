@@ -55,6 +55,11 @@
 <br><br><br><br>
 <div class="container">
 	<div class="row">
+		<div class="col-sm-12  align-self-center">
+			<?php
+			breadcrumb($breadcrumb);
+			?>
+		</div>
 		<div class="col-md-12 ">
 			<div class="card">
 				<div class="card-header" style="background: linear-gradient(to left, #b51b67, #652387); ">
@@ -69,7 +74,7 @@
 										<div class="card <?= $te->bgcolor ?> enseignement align-self-center" style="height: 150px">
 											<div class="card-body text-lg-center">
 												<!--										<img src="--><?//= img('images/estp.jpg')?><!--" class="card-img-absolute rounded" alt="circle-image" height="80%" width="80%"><br><br>-->
-												<h2 class="text-capitalize"><strong class=""><?= $te->libelle ?> </strong> </h2>
+												<h2 class="text-capitalize description"><strong class=""><?= $te->libelle ?> </strong> </h2>
 												<p class="text-uppercase "><?= $te->abbreviation ?></p>
 											</div>
 										</div>

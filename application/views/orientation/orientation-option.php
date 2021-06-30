@@ -55,13 +55,18 @@
 <br><br><br><br>
 <div class="container">
 	<div class="row">
+		<div class="col-sm-12  align-self-center">
+			<?php
+			breadcrumb($breadcrumb);
+			?>
+		</div>
 		<div class="col-md-12 ">
 			<div class="card">
 <!--				<div class="card-header" style="background: linear-gradient(to left, #b51b67, #652387); ">-->
 <!--					<h3 class="text-white text-capitalize bold">enseignement technique et professionnel </h3>-->
 <!--				</div>-->
-				<div class="card-body" style="background: mediumspringgreen">
-					<h3 class="text-center bold"><?= $descrip?> </h3>
+				<div class="card-body" style="background: mediumspringgreen;">
+					<h3 class="text-center description bold"><?= $descrip?> </h3>
 				</div>
 			</div>
 		</div>
@@ -80,7 +85,7 @@
 							foreach ($options as $o){?>
 								<div class="col-md-4 ">
 									<a href="<?=base_url( $o->url.'/'.$o->type_enseignement.'/'.$o->id ) ?>">
-										<div class="card option-item  <?= $o->bgColor ?> " style="height: 120px">
+										<div class="card option-item  <?= $o->bgColor ?> ">
 											<div class="card-body align-self-center text-center">
 												<div class="card-text">
 													<h2 class="text-capitalize"><strong class=""><?= $o->libelle ?> </strong> </h2>

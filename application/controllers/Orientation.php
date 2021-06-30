@@ -25,12 +25,21 @@ class Orientation extends MY_Controller {
 	public function index()
 	{
 		$this->data['active'] = 'orientation';
+		$this->data['breadcrumb'] = array(
+			'Accueil' => base_url(),
+			'Orientation' => '#'
+		);
 		$this->data['type_enseignement'] = $r = $this->om->GetEns();
 //		$this->load->view('welcome_message');
 		$this->render('Orientation', 'orientation');
 	}
 
 	public function GetOption($idEns){
+		$this->data['breadcrumb'] = array(
+			'Accueil' => base_url(),
+			'Orientation' => '#',
+			'Liste des options' => '#'
+		);
 		$ens = $this->om->GetEnsById($idEns);
 		$this->data['idEns'] = $ens[0]->id;
 		$this->data['libelle'] = $ens[0]->libelle;
@@ -40,10 +49,11 @@ class Orientation extends MY_Controller {
 		$this->data['active'] = 'orientation';
 		$this->data['options'] = $o = $this->om->GetOptionEns($idEns);
 //		var_dump($o);die;
-		$this->render('Orientation', 'orientation-option');
+		$this->render('Liste des options de '.$ens[0]->libelle, 'orientation-option');
 	}
 
 	public function GetSection($idEns, $idOption){
+
 		$ens = $this->om->GetEnsById($idEns);
 		$this->data['idEns'] = $ens[0]->id;
 		$this->data['libelleEns'] = $ens[0]->libelle;
@@ -57,15 +67,32 @@ class Orientation extends MY_Controller {
 		$this->data['active'] = 'orientation';
 //		$this->load->view('welcome_message');
 		if($idEns == 1){
-			$this->render('Orientation', 'orientation-section');
+			$this->data['breadcrumb'] = array(
+				'Accueil' => base_url(),
+				'Orientation' => '#',
+				'Examen d\'entré'=>'#'
+			);
+			$this->render('Liste des sections de '.$option[0]->libelle, 'orientation-section');
+
 		}else{
+
+			$this->data['breadcrumb'] = array(
+				'Accueil' => base_url(),
+				'Orientation' => '#',
+				'Liste des sections' => '#'
+			);
 			$this->data['sections'] = $r = $this->om->GetSectionEns($idEns, $idOption);
-			$this->render('Orientation', 'orientation-section-by-sortie');
+			$this->render('Examen d\'entré', 'orientation-section-by-sortie');
 		}
 
 	}
 
 	public function GetSectionBySortie($idEns, $idOption, $identrant){
+		$this->data['breadcrumb'] = array(
+			'Accueil' => base_url(),
+			'Orientation' => '#',
+			'Liste des sections'=>'#'
+		);
 		$enter = $this->om->GetDiplomeEntrant($identrant);
 		$this->data['diplomeNom'] = $enter[0]->nom;
 		$this->data['diplomeCode'] = $enter[0]->code;
@@ -77,25 +104,48 @@ class Orientation extends MY_Controller {
 
 		$this->data['active'] = 'orientation';
 //		$this->load->view('welcome_message');
-		$this->render('Orientation', 'orientation-section-by-sortie');
+		$this->render('Liste des sections '.$enter[0]->nom, 'orientation-section-by-sortie');
 	}
 	public function GetFalcultyBySection($idEns, $idOption, $identrant, $idSection){
 		$sectionItem =  $this->om->GetSectionById($idSection);
 		$this->data['sectionLibelle'] = $sectionItem[0]->libelle;
 		$this->data['sectionDescription'] = $sectionItem[0]->description;
 		$this->data['sectionBgcolor'] = $sectionItem[0]->bgcolor;
-//		var_dump($sectionItem);die;
 
-		$this->data['faculty'] = $f = $this->om->GetFacultySection($idEns, $idOption, $identrant, $idSection);
 
+		$fil = $this->om->GetFacultySection($idEns, $idOption, $identrant, $idSection);
+		foreach($fil as $f){
+			$f->cours = $this->om->getCoursByFaculty($f->id);
+			$f->job = $this->om->getJobByFaculty($f->id);
+			$f->debouches = $this->om->getDeboucheByFaculty($f->id);
+			$f->metiers = $this->om->getMetierByFaculty($f->id);
+		}
+
+		$this->data['faculty'] = $fil;
+//		var_dump($fil);die;
 		$this->data['active'] = 'orientation';
 //		$this->load->view('welcome_message');
-		$this->render('Orientation', 'orientation-faculty');
+		$this->data['breadcrumb'] = array(
+			'Accueil' => base_url(),
+			'Orientation' => '#',
+			'Liste des filière' =>'#'
+		);
+		$this->render('Liste des filière de la section '.$sectionItem[0]->libelle, 'orientation-faculty');
 	}
 
 	public function GetSchoolByFaculty($idFaculty){
+		$f = $this->om->getFacultyById($idFaculty);
+		$filiere = $f[0];
+		$lib = explode(':', $filiere->libelle);
+		$libelle = $lib[1];
+
 		$this->data['active'] = 'orientation';
-//		$this->load->view('welcome_message');
+		$this->data['EcoleParFiliere'] = $etabByFil = $this->om->getSchoolByFaculty($idFaculty);
+		$this->data['breadcrumb'] = array(
+			'Accueil' => base_url(),
+			'Orientation' => '#',
+			'Liste des établissements offrant la filière '.$libelle =>'#'
+		);
 		$this->render('Orientation', 'orientation-etablissement-by-faculty');
 	}
 

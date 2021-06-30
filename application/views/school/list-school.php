@@ -56,12 +56,10 @@
 
 <div class="container">
 	<div class="row">
-		<div class="row ">
-			<div class="col-sm-12  align-self-center">
-				<?php
-				breadcrumb($breadcrumb);
-				?>
-			</div>
+		<div class="col-sm-12  align-self-center">
+			<?php
+			breadcrumb($breadcrumb);
+			?>
 		</div>
 		<div class="col-md-12 ">
 			<div class="card">

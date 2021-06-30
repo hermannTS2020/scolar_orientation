@@ -38,4 +38,5 @@
 	<link rel="stylesheet" href="<?= css('vendors/transition-pages-fakeloader/dist/fakeloader') ?>">
 	<!-- Modernizer for Portfolio -->
 	<script src="<?= js('js/modernizer') ?>"></script>
+
 </head>

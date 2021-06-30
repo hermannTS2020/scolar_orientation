@@ -64,9 +64,7 @@
 		<div class="col-md-12 ">
 			<div class="card">
 				<div class="card-header" style="background: linear-gradient(to left, #b51b67, #652387); ">
-					<h3 class="text-white">Les établisements offrant la filière <strong>ELNI  <i class="text-capitalize small">électronique</i></strong>
-						dans la section <small class="text-capitalize bold">génie électrique</small> de l'option : <small class="text-capitalize bold">Technique industrielle</small> dans  <small class="text-capitalize bold">l'enseignement secondaire technique et professionnel</small>
-					</h3>
+					<h3 class="text-white"> <strong><?php echo $titre ?></strong></h3>
 				</div>
 				<div class="card-body">
 					<div class="row">
@@ -77,29 +75,30 @@
 										<table id="datatable" class="table table-hover table-sm table-bordered w-100">
 											<thead>
 											<tr>
-												<th>Nom de l'établissement </th>
-												<th>Region</th>
-												<th>Département</th>
-												<th>Arrondissement</th>
-												<th>Localité</th>
-<!--												<th>Contact</th>-->
+												<th>Ministères/Structures d’attache </th>
+												<th>Programmes d’aide à l’insertion professionnelle</th>
 											</tr>
 											</thead>
 											<tbody>
-												<?php
-													foreach ($EcoleParFiliere as $e ){?>
-														<tr>
-															<td><strong><?= $e->name?></strong></td>
-															<td><?= $e->reg?></td>
-															<td><?= $e->dept?></td>
-															<td><?= $e->arron?></td>
-															<td><?= $e->localite?></td>
-														</tr>
+											<?php
+											foreach ($structures as $s){?>
+												<tr>
+													<td class="align-middle"><strong><?= $s->nom?></strong></td>
+													<td>
 														<?php
-													}
-												?>
+															foreach($s->programmes as $p){
+																 $lib = explode('.', $p->libelle);
+																 $libelle = $lib[1];?>
+																	<li><?= $libelle?></li>
+														<?php
+															}
+														?>
+													</td>
+												</tr>
+												<?php
+											}
+											?>
 											</tbody>
-
 										</table>
 									</div>
 								</div>

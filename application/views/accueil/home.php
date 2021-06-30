@@ -182,7 +182,7 @@
 
 			</div><!-- end row -->
 			<div class="col-sm-12 col-md-8 offset-md-2 align-self-center etab-button" >
-				<div class="text-center"><a href="" title="Voir tous les établissements" class="btn btn-pink btn-lg btn-rounded">Voir tous les établissements</a></div>
+				<div class="text-center"><a href="<?= base_url('School')?>" title="Voir tous les établissements" class="btn btn-pink btn-lg btn-rounded">Voir tous les établissements</a></div>
 			</div>
 
 		</div><!-- end container -->
